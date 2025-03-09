@@ -26,9 +26,47 @@ Le projet contient deux classes principales :
     - Copie, suppression et renommage de fichiers.
     - Lecture et écriture de fichiers CSV.
 
-## Installation et Exécution
+## Commandes utilisées
+### Créer un répertoire dans HDFS
+hdfs dfs -mkdir -p /user/hadoop/appData
 
-### 1 **Cloner le projet**
-```bash
-git clone https://github.com/votre-utilisateur/manipulation-hdfs-java.git
-cd manipulation-hdfs-java
+### Lister tous les fichiers et répertoires dans HDFS
+hdfs dfs -ls /user/hadoop/appData
+
+### Créer un fichier et y écrire du texte
+echo "Bienvenue sur HDFS avec Java." | hdfs dfs -put - /user/hadoop/appData/data.txt
+
+### Lire le contenu du fichier
+hdfs dfs -cat /user/hadoop/appData/data.txt
+
+### Copier un fichier local vers HDFS
+hdfs dfs -put test.txt /user/hadoop/appData/test.txt
+
+### Télécharger un fichier depuis HDFS vers le système local
+hdfs dfs -get /user/hadoop/appData/test.txt .
+
+### Renommer un fichier dans HDFS
+hdfs dfs -mv /user/hadoop/appData/data.txt /user/hadoop/appData/data_v1.txt
+
+### Supprimer un fichier dans HDFS
+hdfs dfs -rm /user/hadoop/appData/data_v1.txt
+
+### Afficher les métadonnées d’un fichier
+hdfs dfs -stat "%n - Taille: %b octets, Modifié: %y" /user/hadoop/appData/test.txt
+
+### Vérifier l’espace disponible dans HDFS
+hdfs dfs -df -h
+
+### Déplacer un fichier vers un sous-répertoire
+hdfs dfs -mkdir /user/hadoop/archive
+hdfs dfs -mv /user/hadoop/appData/test.txt /user/hadoop/archive/
+
+### Créer et écrire un fichier CSV dans HDFS
+echo "ID,Nom,Prix" > products.csv
+echo "1,Ordinateur,700" >> products.csv
+echo "2,Smartphone,500" >> products.csv
+echo "3,Tablette,300" >> products.csv
+hdfs dfs -put products.csv /user/hadoop/appData/products.csv
+
+### Lire un fichier CSV depuis HDFS
+hdfs dfs -cat /user/hadoop/appData/products.csv
